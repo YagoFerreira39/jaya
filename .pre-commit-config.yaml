@@ -1,0 +1,33 @@
+repos:
+  - repo: local
+    hooks:
+      - id: black-check
+        name: black-check
+        entry: black .
+        language: python
+        types: [ python ]
+        additional_dependencies: [ black ]
+      - id: pylint-check
+        name: pylint-check
+        entry: pylint
+        language: python
+        types: [ python ]
+        additional_dependencies: [ pylint ]
+        args:
+          [
+            "--ignore-paths",
+            "tests/",
+            "--disable=C0114", # Remove temporarily docstring
+            "--disable=C0115", # Remove temporarily docstring
+            "--disable=C0116", # Remove temporarily docstring
+            "--disable=R0903", # Check
+            "--disable=E0611", # Check
+            "--disable=R0913", # Check too many arguments
+            "--disable=E0401", # Check unable to import
+            "--disable=C0301", # Line too long
+            "--disable=E1120", # Witch Doctor injection
+            "--disable=W0221", # Witch Doctor injection
+            "--disable=R0801", # Check similar lines
+            "-rn", # Only display messages
+            "-sn", # Don't display the score
+          ]
