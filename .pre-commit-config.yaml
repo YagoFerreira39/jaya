@@ -28,6 +28,7 @@ repos:
             "--disable=E1120", # Witch Doctor injection
             "--disable=W0221", # Witch Doctor injection
             "--disable=R0801", # Check similar lines
+            "--disable=R0902", # Check similar lines
             "-rn", # Only display messages
             "-sn", # Don't display the score
           ]
