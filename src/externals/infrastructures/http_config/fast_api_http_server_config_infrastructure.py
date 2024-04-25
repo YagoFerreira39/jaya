@@ -1,11 +1,11 @@
 from decouple import config  # pylint: disable=E0401
 from fastapi import FastAPI
-from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.middleware.cors import CORSMiddleware
 
 from src.externals.ports.infrastructures.i_http_config_infrastructure import (
     IHttpServerConfigStructure,
 )
+from src.externals.routers.currency_exchange_router import CurrencyExchangeRouter
 
 
 class FastApiHttpServerConfigInfrastructure(IHttpServerConfigStructure):
@@ -28,10 +28,10 @@ class FastApiHttpServerConfigInfrastructure(IHttpServerConfigStructure):
             allow_headers=["*"],
         )
 
-        self.__app.add_middleware(BaseHTTPMiddleware)
-
     def __register_routers(self):
-        pass
+        currency_exchange_router = CurrencyExchangeRouter.get_router()
+
+        self.__app.include_router(currency_exchange_router)
 
     def config_http_server(self) -> FastAPI:
         self.__register_middlewares()
