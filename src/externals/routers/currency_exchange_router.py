@@ -32,7 +32,7 @@ class CurrencyExchangeRouter(Router):
         response_model_exclude_none=True,
         response_model=RegisterCurrencyExchangeResponse,
     )
-    async def register_user_profile(
+    async def register_currency_exchange(
         user_id: str,
         request: RegisterCurrencyExchangeRouterRequest,
     ) -> RegisterCurrencyExchangeResponse:

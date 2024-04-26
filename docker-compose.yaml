@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  jaya-mongodb:
+    image: mongo:latest
+    container_name: jaya-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_DATABASE: root-db
+    ports:
+      - 27030:27017
+    volumes:
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongodb_data_container:/data/db
+    networks:
+      - jaya_network
+
+  jaya-currency-exchange:
+    build:
+      context: .
+    environment:
+      SERVER_HOST: '0.0.0.0'
+      SERVER_PORT: 8000
+      LOG_LEVEL: 10
+      MONGODB_STRING_CONNECTION: "mongodb://root:rootpassword@localhost:27030/?authMechanism=DEFAULT"
+      JAYA_DATABASE: "Jaya"
+      CURRENCY_EXCHANGE_COLLECTION: "currencyExchanges"
+    ports:
+      - "8000:8000"
+    networks:
+      - jaya_network
+
+volumes:
+  mongodb_data_container:
+
+networks:
+  jaya_network:
+    driver: bridge
