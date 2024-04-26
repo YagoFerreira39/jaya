@@ -46,10 +46,12 @@ class ExchangeRatesService(IExchangeRatesService):
             ) as http_client_session:
                 http_client_session: ClientSession
 
+                api_key = config("EXCHANGE_RATES_API_KEY")
+
                 result = await http_client_session.get(
                     url="/v1/latest",
                     params={
-                        "apikey": "fca_live_3NNEtvzGmo4Y9mlCVfPxl9sSKC4tlo5wpFQ33zyx",
+                        "apikey": api_key,
                         "base_currency": base_currency,
                         "currencies": dest_currency,
                     },
