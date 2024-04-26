@@ -1,3 +1,5 @@
+from typing import List
+
 from src.adapters.extensions.exceptions.extension_exceptions import (
     ExtensionUnexpectedException,
 )
@@ -13,7 +15,7 @@ class CurrencyExchangeExtension(ICurrencyExchangeExtension):
     def from_database_result_to_model(result: dict) -> CurrencyExchangeModel:
         try:
             model = CurrencyExchangeModel(
-                id=result.get("id_"),
+                id=result.get("_id"),
                 user_id=result.get("user_id"),
                 base_currency=result.get("base_currency"),
                 dest_currency=result.get("dest_currency"),
@@ -24,6 +26,24 @@ class CurrencyExchangeExtension(ICurrencyExchangeExtension):
             )
 
             return model
+
+        except Exception as original_exception:
+            raise ExtensionUnexpectedException(
+                message="Unexpected extension exception.",
+                original_error=original_exception,
+            ) from original_exception
+
+    @staticmethod
+    def from_database_result_to_model_list(
+        result_list: dict,
+    ) -> List[CurrencyExchangeModel]:
+        try:
+            model_list = [
+                CurrencyExchangeExtension.from_database_result_to_model(result=result)
+                for result in result_list
+            ]
+
+            return model_list
 
         except Exception as original_exception:
             raise ExtensionUnexpectedException(

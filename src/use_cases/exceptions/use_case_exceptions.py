@@ -19,3 +19,8 @@ class MalformedRequestInputException(UseCaseBaseException):
 class UnableToRegisterCurrencyExchange(UseCaseBaseException):
     _reason = UseCaseExceptionsReasonsEnum.UNABLE_TO_REGISTER_CURRENCY_EXCHANGE_ERROR
     _http_status_code = HTTPStatus.INTERNAL_SERVER_ERROR
+
+
+class UnableToRetrieveCurrencyExchange(UseCaseBaseException):
+    _reason = UseCaseExceptionsReasonsEnum.UNABLE_TO_RETRIEVE_CURRENCY_EXCHANGE_ERROR
+    _http_status_code = HTTPStatus.INTERNAL_SERVER_ERROR

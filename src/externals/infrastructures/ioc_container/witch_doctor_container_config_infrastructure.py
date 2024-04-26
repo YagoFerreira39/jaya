@@ -1,5 +1,11 @@
 from witch_doctor import WitchDoctor, InjectionType
 
+from src.adapters.extensions.currency_exchange.currency_exchange_extension import (
+    CurrencyExchangeExtension,
+)
+from src.adapters.extensions.currency_exchange.get_currency_exchanges_by_user_id_extension import (
+    GetCurrencyExchangesByUserIdExtension,
+)
 from src.adapters.extensions.currency_exchange.register_currency_exchange_extension import (
     RegisterCurrencyExchangeExtension,
 )
@@ -26,8 +32,17 @@ from src.externals.services.exchange_rates_service import ExchangeRatesService
 from src.externals.services.ports.i_http_session_infrastructure import (
     IHttpSessionInfrastructure,
 )
+from src.use_cases.currency_exchange.get_currency_exchanges_by_user_id_use_case import (
+    GetCurrencyExchangesByUserIdUseCase,
+)
 from src.use_cases.currency_exchange.register_currency_exchange_use_case import (
     RegisterCurrencyExchangeUseCase,
+)
+from src.use_cases.ports.extensions.currency_exchange.i_currency_exchange_extension import (
+    ICurrencyExchangeExtension,
+)
+from src.use_cases.ports.extensions.currency_exchange.i_get_currency_exchanges_by_user_id_extension import (
+    IGetCurrencyExchangesByUserIdExtension,
 )
 from src.use_cases.ports.extensions.currency_exchange.i_register_currency_exchange_extension import (
     IRegisterCurrencyExchangeExtension,
@@ -36,6 +51,9 @@ from src.use_cases.ports.repositories.mongo_db.i_currency_exchange_repository im
     ICurrencyExchangeRepository,
 )
 from src.use_cases.ports.services.i_exchange_rates_service import IExchangeRatesService
+from src.use_cases.ports.use_cases.currency_exchange.i_get_currency_exchanges_by_user_id_use_case import (
+    IGetCurrencyExchangesByUserIdUseCase,
+)
 from src.use_cases.ports.use_cases.currency_exchange.i_register_currency_exchange_use_case import (
     IRegisterCurrencyExchangeUseCase,
 )
@@ -48,6 +66,11 @@ class WitchDoctorContainerConfigInfrastructure(IIocContainerConfigInfrastructure
         use_cases_container(
             IRegisterCurrencyExchangeUseCase,
             RegisterCurrencyExchangeUseCase,
+            InjectionType.SINGLETON,
+        )
+        use_cases_container(
+            IGetCurrencyExchangesByUserIdUseCase,
+            GetCurrencyExchangesByUserIdUseCase,
             InjectionType.SINGLETON,
         )
 
@@ -90,6 +113,16 @@ class WitchDoctorContainerConfigInfrastructure(IIocContainerConfigInfrastructure
         extensions_container(
             IRegisterCurrencyExchangeExtension,
             RegisterCurrencyExchangeExtension,
+            InjectionType.SINGLETON,
+        )
+        extensions_container(
+            IGetCurrencyExchangesByUserIdExtension,
+            GetCurrencyExchangesByUserIdExtension,
+            InjectionType.SINGLETON,
+        )
+        extensions_container(
+            ICurrencyExchangeExtension,
+            CurrencyExchangeExtension,
             InjectionType.SINGLETON,
         )
 
